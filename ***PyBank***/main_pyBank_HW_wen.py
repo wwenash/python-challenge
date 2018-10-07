@@ -28,6 +28,9 @@ import csv
 totalFinal = 0
 totalMonths = 0
 totalAveChange = 0
+index = 0
+finalValue = 0
+originalValue = 0
 
 Month = []
 MonthlyBalance = []
@@ -54,12 +57,31 @@ with open(budgetCSV, 'r') as budgetFile:
         totalMonths += 1
         totalFinal = totalFinal + (account)
 
-# Calculating average change
-for num in range(0,totalMonths):
+# Calculating average change between months
+for num , originalValue in enumerate(MonthlyBalance):
+   #if original value is not equal to the last element in the List
+    if originalValue != int(MonthlyBalance[-1]):
 
-    totalAveChange = totalAveChange + (int(MonthlyBalance[num]) - int(MonthlyBalance[num - 1]))
+        finalValue = int(MonthlyBalance[num+1])
+
+        totalAveChange = totalAveChange + ( finalValue - originalValue )
+        index += 1
+    else:
+        totalAveChange = str(round(totalAveChange / index, 2))
+maxValue = 0
+minValue = 0
+for i, value in enumerate(MonthlyBalance):
+
+    if value > maxValue:
+        maxValue = value
+        maxline = i
+    elif value < minValue:
+        minValue = value
+        minline = i
 
 
+print(f"\n\nGreatest Increase in Profits: {Month[maxline]} (${maxValue}) and {maxline}")
+print(f"Greatest Decrease in Profits: {Month[minline]} (${minValue}) and {minline}")
 
 # Print out data of interest...
 print(f"\n\nTotal Months: {totalMonths}")
