@@ -25,19 +25,23 @@
 import os
 import csv
 
+#initialize variables 
 totalFinal = 0
 totalMonths = 0
 totalAveChange = 0
 index = 0
 finalValue = 0
 originalValue = 0
+maxValue = 0
+minValue = 0
+maxline = 0
+minline = 0
 
+#make Lists
 Month = []
 MonthlyBalance = []
 
-firstPass = False
-
-#define where the data is...
+#define input files and output files
 budgetCSV = os.path.join('../../', 'WASHSTL201809DATA3', '03-Python','Homework','Instructions','PyBank','Resources', 'budget_data.csv' )
 
 # open the data... for reading, split on commas, skip header,
