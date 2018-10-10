@@ -29,21 +29,19 @@ import csv
 
 # initialize variables
 voterCount = 0
+maxVote = 0
+winner = " "
 
 # make Lists/Dictionaries
 Election = {}
-ElectionVoter =[]
-
-county = set()
-canidate = set()
-
 myvotes = {}
 
 # define input and output files
-#electionCSV = os.path.join('../../', 'WASHSTL201809DATA3','03-Python','Homework','Instructions','PyPoll','Resources', 'election_data.csv')
-testElectionCSV = os.path.join('../../', 'WASHSTL201809DATA3','03-Python','Homework','Instructions','PyPoll','Resources', 'TEST_election_data.csv')
+ElectionCSV = os.path.join('../../', 'WASHSTL201809DATA3','03-Python','Homework','Instructions','PyPoll','Resources', 'election_data.csv')
+#testElectionCSV = os.path.join('../../', 'WASHSTL201809DATA3','03-Python','Homework','Instructions','PyPoll','Resources', 'TEST_election_data.csv')
 
-with open(testElectionCSV, 'r') as electionFile:
+with open(ElectionCSV, 'r') as electionFile:
+#with open(testElectionCSV, 'r') as electionFile:
 
     resultsreader = csv.reader(electionFile, delimiter=',')
     header = next(resultsreader)
@@ -53,24 +51,38 @@ with open(testElectionCSV, 'r') as electionFile:
         Election[line[0]] = line[1:]
 
 #print(f"{Election.keys()}")
-for keys in Election.keys():
-    ElectionVoter.append(keys)
-    voterCount += 1
 
-#print(f"{voterCount}")
+# iterate over the elections dict to get total votes and make new dict 
+# that contains only the number of votes for each canidate
 for key, value in Election.items():
-    county.add(value[0])
-    canidate.add(value[1])
-    #print(f"{value[1]}")
+    voterCount += 1
+    person = value[1]
+    #print(f"{person}")
+    
+    if person not in myvotes.keys():
+        myvotes.update({person:1})
+    else:
+        myvotes[person] += 1
 
-    if str(value[1]) not in myvotes.items():
-        #myvotes.update({value[1]:1})
-        person = str(value[1])
-        myvotes.update({'person':1})
-        #print(f"{myvotes.keys()}")
+#print(f"{myvotes} and total votes: {voterCount}")
 
-    elif str(value[1]) in myvotes.keys():
-        myvotes[1] += 1
- 
-print(f"\nHello\n {myvotes.keys()}")
+print(f"\n\nElection Results")
+print("-------------------------")
+print(f"Total Votes: {voterCount}")
+print("-------------------------")
 
+# This loop is to get canidate, canidate votes and canidage percentage... plus print out
+for key, value in myvotes.items():
+    canidate = key
+    canidateVotes = value
+    canidatePercent = round((canidateVotes / voterCount) * 100, 3)
+    #print(f"\n{canidate} has {canidateVotes} votes and {canidatePercent}% of votes\n ")
+    print(f"{canidate}: {canidatePercent}% ({canidateVotes})")
+
+    if canidateVotes > maxVote:
+        maxVote = canidateVotes
+        winner = canidate
+
+print("-------------------------")
+print(f"Winner: {winner}")
+print("-------------------------\n\n")

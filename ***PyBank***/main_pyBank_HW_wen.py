@@ -84,14 +84,16 @@ for i, value in enumerate(MonthlyBalance):
         minline = i
 
 
-print(f"\n\nGreatest Increase in Profits: {Month[maxline]} (${maxValue}) and {maxline}")
-print(f"Greatest Decrease in Profits: {Month[minline]} (${minValue}) and {minline}")
+#print(f"\n\nGreatest Increase in Profits: {Month[maxline]} (${maxValue}) and {maxline}")
+#print(f"Greatest Decrease in Profits: {Month[minline]} (${minValue}) and {minline}")
 
 # Print out data of interest...
-print(f"\n\nTotal Months: {totalMonths}")
-print(f"Grand Total: ${totalFinal}")
+#print(f"\n\nTotal Months: {totalMonths}")
+#print(f"Grand Total: ${totalFinal}")
+#print(f"\n\nTotal Change: ${totalAveChange}")
 
-print(f"\n\nTotal Change: ${totalAveChange}")
-
-
-
+print(f"\n\nFinancial Analysis\n----------------------------")
+print(f"Total Months: {totalMonths}\nGrand Total: ${totalFinal}")
+print(f"Average Change: ${totalAveChange}")
+print(f"Greatest Increase in Profits: {Month[maxline]} (${maxValue})")
+print(f"Greatest Decrease in Profits: {Month[minline]} (${minValue})\n\n")
