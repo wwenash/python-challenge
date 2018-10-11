@@ -67,22 +67,22 @@ for key, value in Election.items():
 #print(f"{myvotes} and total votes: {voterCount}")
 
 print(f"\n\nElection Results")
-print("-------------------------")
+print("-" * 25)
 print(f"Total Votes: {voterCount}")
-print("-------------------------")
+print("-" * 25)
 
 # This loop is to get canidate, canidate votes and canidage percentage... plus print out
 for key, value in myvotes.items():
     canidate = key
     canidateVotes = value
-    canidatePercent = round((canidateVotes / voterCount) * 100, 3)
-    #print(f"\n{canidate} has {canidateVotes} votes and {canidatePercent}% of votes\n ")
-    print(f"{canidate}: {canidatePercent}% ({canidateVotes})")
+    #canidatePercent = round((canidateVotes / voterCount) * 100, 5)
+    canidateTEST = (canidateVotes /voterCount) * 100
+    print(str(canidate) + ": " + "%.3f" % (canidateTEST) + "% (" + str(canidateVotes) + ")")
 
     if canidateVotes > maxVote:
         maxVote = canidateVotes
         winner = canidate
 
-print("-------------------------")
+print("-" * 25)
 print(f"Winner: {winner}")
-print("-------------------------\n\n")
+print("-" * 25 + "\n\n")

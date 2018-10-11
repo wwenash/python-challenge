@@ -40,6 +40,7 @@ minline = 0
 #make Lists
 Month = []
 MonthlyBalance = []
+MonthlyDiff = {}
 
 #define input files and output files
 budgetCSV = os.path.join('../../', 'WASHSTL201809DATA3', '03-Python','Homework','Instructions','PyBank','Resources', 'budget_data.csv' )
@@ -54,10 +55,8 @@ with open(budgetCSV, 'r') as budgetFile:
     for row in budgetreader:
         date = row[0]
         Month.append(date)
-        
         account = int(row[1])
         MonthlyBalance.append(account)
-
         totalMonths += 1
         totalFinal = totalFinal + (account)
 
@@ -67,33 +66,23 @@ for num , originalValue in enumerate(MonthlyBalance):
     if originalValue != int(MonthlyBalance[-1]):
 
         finalValue = int(MonthlyBalance[num+1])
-
-        totalAveChange = totalAveChange + ( finalValue - originalValue )
+        monthlydiff = (finalValue - originalValue)
+        MonthlyDiff.update({num:monthlydiff})
+        totalAveChange = totalAveChange + monthlydiff
+        #totalAveChange = totalAveChange + ( finalValue - originalValue )
         index += 1
     else:
         totalAveChange = str(round(totalAveChange / index, 2))
-maxValue = 0
-minValue = 0
-for i, value in enumerate(MonthlyBalance):
 
-    if value > maxValue:
-        maxValue = value
-        maxline = i
-    elif value < minValue:
-        minValue = value
-        minline = i
-
-
-#print(f"\n\nGreatest Increase in Profits: {Month[maxline]} (${maxValue}) and {maxline}")
-#print(f"Greatest Decrease in Profits: {Month[minline]} (${minValue}) and {minline}")
+#Calculate the max/min month in the set of 86 months by looking at MonthlyDiff dictonary
+maxindex = max(MonthlyDiff, key=MonthlyDiff.get)
+maxValue = MonthlyDiff[maxindex]
+minindex = min(MonthlyDiff, key=MonthlyDiff.get)
+minValue = MonthlyDiff[minindex]
 
 # Print out data of interest...
-#print(f"\n\nTotal Months: {totalMonths}")
-#print(f"Grand Total: ${totalFinal}")
-#print(f"\n\nTotal Change: ${totalAveChange}")
-
-print(f"\n\nFinancial Analysis\n----------------------------")
+print(f"\n\nFinancial Analysis\n" + "-" * 25)
 print(f"Total Months: {totalMonths}\nGrand Total: ${totalFinal}")
 print(f"Average Change: ${totalAveChange}")
-print(f"Greatest Increase in Profits: {Month[maxline]} (${maxValue})")
-print(f"Greatest Decrease in Profits: {Month[minline]} (${minValue})\n\n")
+print(f"Greatest Increase in Profits: {Month[maxindex+1]} (${maxValue})")
+print(f"Greatest Decrease in Profits: {Month[minindex+1]} (${minValue})\n\n")
