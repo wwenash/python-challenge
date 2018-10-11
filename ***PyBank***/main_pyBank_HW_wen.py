@@ -18,8 +18,8 @@
 #  Greatest Decrease in Profits: Sep-2013 ($-2196167)
 #  ```
 #* In addition, your final script should both print the analysis to the terminal and export a text file with the results.
-
-# data is located at: ../../WASHSTL201809DATA3/03-Python/Homework/Instructions/PyBank/Resources/budget_data.csv
+#
+### End of Instructions ###
 
 # import packages
 import os
@@ -34,8 +34,8 @@ finalValue = 0
 originalValue = 0
 maxValue = 0
 minValue = 0
-maxline = 0
-minline = 0
+maxindex = 0
+minindex = 0
 
 #make Lists
 Month = []
@@ -43,11 +43,12 @@ MonthlyBalance = []
 MonthlyDiff = {}
 
 #define input files and output files
-budgetCSV = os.path.join('../../', 'WASHSTL201809DATA3', '03-Python','Homework','Instructions','PyBank','Resources', 'budget_data.csv' )
+input_budgetCSV = os.path.join('.', 'Python_HomeWork_input', 'budget_data.csv' )
+outputFile = os.path.join('.', 'Python_HomeWork_output','PyBank_Analysis.txt')
 
 # open the data... for reading, split on commas, skip header,
 # do simple calculations and fill 
-with open(budgetCSV, 'r') as budgetFile:
+with open(input_budgetCSV, 'r') as budgetFile:
 
     budgetreader = csv.reader(budgetFile, delimiter=',')
     header = next(budgetreader)
@@ -67,7 +68,9 @@ for num , originalValue in enumerate(MonthlyBalance):
 
         finalValue = int(MonthlyBalance[num+1])
         monthlydiff = (finalValue - originalValue)
+
         MonthlyDiff.update({num:monthlydiff})
+
         totalAveChange = totalAveChange + monthlydiff
         #totalAveChange = totalAveChange + ( finalValue - originalValue )
         index += 1
@@ -86,3 +89,12 @@ print(f"Total Months: {totalMonths}\nGrand Total: ${totalFinal}")
 print(f"Average Change: ${totalAveChange}")
 print(f"Greatest Increase in Profits: {Month[maxindex+1]} (${maxValue})")
 print(f"Greatest Decrease in Profits: {Month[minindex+1]} (${minValue})\n\n")
+
+# Write all of the PyBank Analysis data to Text file:
+with open(outputFile, "w", newline="") as outtextfile:
+    
+    print(f"\n\nFinancial Analysis\n" + "-" * 25, file=outtextfile)
+    print(f"Total Months: {totalMonths}\nGrand Total: ${totalFinal}", file=outtextfile)
+    print(f"Average Change: ${totalAveChange}", file=outtextfile)
+    print(f"Greatest Increase in Profits: {Month[maxindex+1]} (${maxValue})", file=outtextfile)
+    print(f"Greatest Decrease in Profits: {Month[minindex+1]} (${minValue})\n\n", file=outtextfile)

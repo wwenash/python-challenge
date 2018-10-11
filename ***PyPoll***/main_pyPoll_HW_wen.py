@@ -22,6 +22,8 @@
 #  -------------------------
 #  ```
 #* In addition, your final script should both print the analysis to the terminal and export a text file with the results.
+#
+### End of Instructions ###
 
 # import packages
 import os
@@ -37,11 +39,14 @@ Election = {}
 myvotes = {}
 
 # define input and output files
-ElectionCSV = os.path.join('../../', 'WASHSTL201809DATA3','03-Python','Homework','Instructions','PyPoll','Resources', 'election_data.csv')
-#testElectionCSV = os.path.join('../../', 'WASHSTL201809DATA3','03-Python','Homework','Instructions','PyPoll','Resources', 'TEST_election_data.csv')
+input_ElectionCSV = os.path.join('.', 'Python_HomeWork_input', 'election_data.csv')
+#testinput_ElectionCSV = os.path.join('.','Python_HomeWork_input', 'TEST_election_data.csv')
+outputFile = os.path.join('.', 'Python_HomeWork_output', 'PyPoll_ElectionResults.txt')
 
-with open(ElectionCSV, 'r') as electionFile:
-#with open(testElectionCSV, 'r') as electionFile:
+# open the data... for reading, split on commas, skip header,
+# and make hash
+with open(input_ElectionCSV, 'r') as electionFile:
+#with open(testinput_ElectionCSV, 'r') as electionFile:
 
     resultsreader = csv.reader(electionFile, delimiter=',')
     header = next(resultsreader)
@@ -66,23 +71,34 @@ for key, value in Election.items():
 
 #print(f"{myvotes} and total votes: {voterCount}")
 
-print(f"\n\nElection Results")
-print("-" * 25)
-print(f"Total Votes: {voterCount}")
-print("-" * 25)
+# Write all of the PyBank Analysis data to Text file:
+with open(outputFile, "w", newline="") as outtextfile:
 
-# This loop is to get canidate, canidate votes and canidage percentage... plus print out
-for key, value in myvotes.items():
-    canidate = key
-    canidateVotes = value
-    #canidatePercent = round((canidateVotes / voterCount) * 100, 5)
-    canidateTEST = (canidateVotes /voterCount) * 100
-    print(str(canidate) + ": " + "%.3f" % (canidateTEST) + "% (" + str(canidateVotes) + ")")
+    print(f"\n\nElection Results")
+    print(f"\n\nElection Results", file=outtextfile)
+    print("-" * 25)
+    print("-" * 25, file=outtextfile)
+    print(f"Total Votes: {voterCount}")
+    print(f"Total Votes: {voterCount}", file=outtextfile)
+    print("-" * 25)
+    print("-" * 25, file=outtextfile)
 
-    if canidateVotes > maxVote:
-        maxVote = canidateVotes
-        winner = canidate
+    # This loop is to get canidate, canidate votes and canidage percentage... plus print out
+    for key, value in myvotes.items():
+        canidate = key
+        canidateVotes = value
+        #canidatePercent = round((canidateVotes / voterCount) * 100, 5)
+        canidateTEST = (canidateVotes /voterCount) * 100
+        print(str(canidate) + ": " + "%.3f" % (canidateTEST) + "% (" + str(canidateVotes) + ")")
+        print(str(canidate) + ": " + "%.3f" % (canidateTEST) + "% (" + str(canidateVotes) + ")", file=outtextfile)
 
-print("-" * 25)
-print(f"Winner: {winner}")
-print("-" * 25 + "\n\n")
+        if canidateVotes > maxVote:
+            maxVote = canidateVotes
+            winner = canidate
+
+    print("-" * 25)
+    print("-" * 25, file=outtextfile)
+    print(f"Winner: {winner}")
+    print(f"Winner: {winner}", file=outtextfile)
+    print("-" * 25 + "\n\n")
+    print("-" * 25 + "\n\n", file=outtextfile)
